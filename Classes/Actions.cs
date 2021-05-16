@@ -27,10 +27,12 @@ namespace ConsoleApp.Classes
             // This function retrieves a certain number of tweets from the specified user timelime.
             var userClient = new TwitterClient(Credentials.consumerKey, Credentials.consumerSecret, Credentials.accessToken, Credentials.accessSecret);
             var timelineTweets = await userClient.Timelines.GetUserTimelineAsync(username);
+            int count = 1;
 
-            foreach (var tweet in timelineTweets)
+            while (count <= noOfTweets)
             {
-                System.Console.WriteLine(tweet);
+                System.Console.WriteLine($"{count}. {timelineTweets[count]}\n");
+                count++;
             }
         }
     }
