@@ -8,6 +8,7 @@ namespace ConsoleApp.Classes
     {
         public async Task Tweet(string text)
         {
+            // This function lets you publish tweets
             var userClient = new TwitterClient(Credentials.consumerKey, Credentials.consumerSecret, Credentials.accessToken, Credentials.accessSecret);
             var tweet = await userClient.Tweets.PublishTweetAsync(text);
             System.Console.WriteLine("You published the tweet : " + tweet);
@@ -15,14 +16,15 @@ namespace ConsoleApp.Classes
 
         public async Task Follow(string username)
         {
+            // This lets you follow specified users
             var userClient = new TwitterClient(Credentials.consumerKey, Credentials.consumerSecret, Credentials.accessToken, Credentials.accessSecret);
             await userClient.Users.FollowUserAsync(username);
-            System.Console.WriteLine("Follow");
+            System.Console.WriteLine($"Followed {username}");
         }
 
         public async Task viewTimeline(string username, int noOfTweets)
-        // this function retrieves a certain number of tweets from the specified user timelime.
         {
+            // This function retrieves a certain number of tweets from the specified user timelime.
             var userClient = new TwitterClient(Credentials.consumerKey, Credentials.consumerSecret, Credentials.accessToken, Credentials.accessSecret);
             var timelineTweets = await userClient.Timelines.GetUserTimelineAsync(username);
 
