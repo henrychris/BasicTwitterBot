@@ -1,8 +1,5 @@
-﻿using Classes;
-using ConsoleApp.Classes;
-using System;
+﻿using ConsoleApp.Classes;
 using System.Threading.Tasks;
-using Tweetinvi;
 
 namespace ConsoleApp
 {
