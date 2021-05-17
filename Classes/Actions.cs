@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Classes;
 using Tweetinvi;
+using Tweetinvi.Exceptions;
 
 namespace ConsoleApp.Classes
 {
@@ -40,33 +41,31 @@ namespace ConsoleApp.Classes
             /* 
                 This function retrieves a certain number of tweets from the specified user timelime.
             */
-            Menu menu = new Menu(); // create menu object
             string username = getUsername();
             int noOfTweets = getNoOfTweets();
+            int count = 1;
 
             var userClient = new TwitterClient(Credentials.consumerKey, Credentials.consumerSecret,
             Credentials.accessToken, Credentials.accessSecret);
 
             var timelineTweets = await userClient.Timelines.GetUserTimelineAsync(username);
             // GetUserTimelineAsync() stores tweets on the timeline in an array.
-            int count = 1;
 
             try
             {
-                while (count <= noOfTweets)
+               while (count < noOfTweets)
                 {
-                    System.Console.WriteLine($"   {count}. {timelineTweets[count]}");
+                    System.Console.WriteLine($"   {count + 1}. {timelineTweets[count]}\t");
                     count++;
                     // this prints each element of the timeline array (which is a tweet)
                 }
             }
-            catch (TimeoutException e) // sometimes the request times out.
+            catch (TwitterException e) // sometimes the request times out.
             {
                 Console.WriteLine(e.ToString());
             }
-            await menu.displayMenu();
-            // there was a bug that caused getUsername() to run infinitely.
-            // The line above opens the menu and stops that.
+            System.Console.WriteLine();
+           // what is this bug?????????
         }
         public string getTweet()
         {
@@ -136,6 +135,7 @@ namespace ConsoleApp.Classes
                 catch (FormatException)
                 {
                     System.Console.WriteLine("  You ought to input a number.");
+                    System.Console.Write("  How many tweets do you need: ");
                 }
                 if (noOfTweets > limit)
                 {
