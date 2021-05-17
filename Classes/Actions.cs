@@ -9,8 +9,10 @@ namespace ConsoleApp.Classes
     {
         public async Task Tweet()
         {
-            // This function lets you publish tweets
-
+            /* This method lets you publish tweets.
+            line 18/19 authenticates the user.
+            line 20 publishes the tweet.
+            */
             string text = getTweet();
 
             var userClient = new TwitterClient(Credentials.consumerKey, Credentials.consumerSecret,
@@ -21,7 +23,10 @@ namespace ConsoleApp.Classes
 
         public async Task Follow()
         {
-            // This lets you follow specified users
+            /*
+                this method follows a specified user.
+                line 30 uses another method to retrieve the username.
+            */
             string username = getUsername();
 
             var userClient = new TwitterClient(Credentials.consumerKey, Credentials.consumerSecret,
@@ -32,8 +37,10 @@ namespace ConsoleApp.Classes
 
         public async Task viewTimeline()
         {
-            // This function retrieves a certain number of tweets from the specified user timelime.
-            Menu menu = new Menu();
+            /* 
+                This function retrieves a certain number of tweets from the specified user timelime.
+            */
+            Menu menu = new Menu(); // create menu object
             string username = getUsername();
             int noOfTweets = getNoOfTweets();
 
@@ -41,6 +48,7 @@ namespace ConsoleApp.Classes
             Credentials.accessToken, Credentials.accessSecret);
 
             var timelineTweets = await userClient.Timelines.GetUserTimelineAsync(username);
+            // GetUserTimelineAsync() stores tweets on the timeline in an array.
             int count = 1;
 
             try
@@ -49,13 +57,16 @@ namespace ConsoleApp.Classes
                 {
                     System.Console.WriteLine($"   {count}. {timelineTweets[count]}");
                     count++;
+                    // this prints each element of the timeline array (which is a tweet)
                 }
             }
-            catch (TimeoutException e)
+            catch (TimeoutException e) // sometimes the request times out.
             {
                 Console.WriteLine(e.ToString());
             }
             await menu.displayMenu();
+            // there was a bug that caused getUsername() to run infinitely.
+            // The line above opens the menu and stops that.
         }
         public string getTweet()
         {
@@ -65,7 +76,7 @@ namespace ConsoleApp.Classes
             while (!valid)
             {
                 tweet = Console.ReadLine();
-                if (tweet.Length > 140)
+                if (tweet.Length > 140) // keeps tweets within twitter limits
                 {
                     System.Console.WriteLine("Tweet too long.");
                     System.Console.WriteLine("Write your tweet: ");
@@ -80,6 +91,9 @@ namespace ConsoleApp.Classes
 
         public string getUsername()
         {
+            /* 
+                this makes it cleaner to get usernames. Improves readability.
+            */
             string username = "";
             bool valid = false;
             System.Console.Write("  Username: ");
@@ -102,6 +116,10 @@ namespace ConsoleApp.Classes
 
         public int getNoOfTweets()
         {
+            /* 
+                this also improves readability in code. 
+                gets the number of tweets to be retrieved from the timeline.
+             */
             bool valid = false;
             int noOfTweets = 1;
             int limit = 100;
