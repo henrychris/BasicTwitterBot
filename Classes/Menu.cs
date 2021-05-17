@@ -22,14 +22,14 @@ namespace ConsoleApp.Classes
             Actions act = new Actions();
             string input = "";
 
-
+            System.Console.WriteLine("  MENU    ");
+            System.Console.WriteLine("  1. Tweet\n  2. Follow a user\n  3. View a users timeline\n  Use Q to quit.");
+            System.Console.Write("  Make a selection using 1-3: ");
+            input = (string)Console.ReadLine();
+            System.Console.WriteLine();
             while (input.ToUpper() != "Q")
             {
-                System.Console.WriteLine("  MENU    ");
-                System.Console.WriteLine("  1. Tweet\n  2. Follow a user\n  3. View a users timeline\n  Use Q or another key to display menu");
-                System.Console.Write("  Make a selection using 1-3: ");
-                input = (string)Console.ReadLine();
-                System.Console.WriteLine();
+
 
                 if (input == "1")
                 {
@@ -37,11 +37,19 @@ namespace ConsoleApp.Classes
                 }
                 if (input == "2")
                 {
-
+                    await act.Follow();
                 }
                 if (input == "3")
                 {
-
+                    await act.viewTimeline();
+                }
+                else
+                {
+                    System.Console.WriteLine("  MENU    ");
+                    System.Console.WriteLine("  1. Tweet\n  2. Follow a user\n  3. View a users timeline\n  Use Q or another key to display menu");
+                    System.Console.Write("  Make a selection using 1-3: ");
+                    input = (string)Console.ReadLine();
+                    System.Console.WriteLine();
                 }
 
             }
