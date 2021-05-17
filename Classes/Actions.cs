@@ -7,16 +7,16 @@ namespace ConsoleApp.Classes
 {
     public class Actions
     {
-        public async Task Tweet(string text)
+        public async Task Tweet()
         {
             // This function lets you publish tweets
 
-            text = getTweet();
-            
+            string text = getTweet();
+
             var userClient = new TwitterClient(Credentials.consumerKey, Credentials.consumerSecret,
             Credentials.accessToken, Credentials.accessSecret);
             var tweet = await userClient.Tweets.PublishTweetAsync(text);
-            System.Console.WriteLine("You published the tweet : " + tweet);
+            System.Console.WriteLine($"You tweeted: '{tweet}'\n");
         }
 
         public async Task Follow(string username)
@@ -48,7 +48,7 @@ namespace ConsoleApp.Classes
         {
             string tweet = "";
             bool valid = false;
-            System.Console.WriteLine("Write your tweet: ");
+            System.Console.Write("Write your tweet: ");
             while (!valid)
             {
                 tweet = Console.ReadLine();
